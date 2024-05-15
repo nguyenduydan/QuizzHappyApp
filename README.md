@@ -39,7 +39,7 @@
 ![Static Badge](https://img.shields.io/badge/ASUS-blue?style=for-the-badge&logo=asus) ![Static Badge](https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github) ![Static Badge](https://img.shields.io/badge/Java-green?style=for-the-badge)![Static Badge](https://img.shields.io/badge/C%23-purple?style=for-the-badge&logo=C%23) ![Static Badge](https://img.shields.io/badge/HTML-orange?style=for-the-badge&logo=HTML5) ![Static Badge](https://img.shields.io/badge/CSS-magenta?style=for-the-badge&logo=Css3)
 [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 
-[commit-shield]: https://img.shields.io/github/commit-activity/t/nguyenduydan/63133615_AndroidProgramming?style=flat&color=yellow
+[commit-shield]: https://img.shields.io/github/commit-activity/t/nguyenduydan/QuizzHappyApp?color=yellow
 [contributors-shield]: https://img.shields.io/github/contributors/nguyenduydan/63133615_JavaProgramming?color=blue
 [contributors-url]: https://github.com/nguyenduydan/63133615_JavaProgramming/graphs/contributors
 [language-count-shield]: https://img.shields.io/github/languages/count/nguyenduydan/63133615_JavaProgramming?color=red
