@@ -18,7 +18,7 @@
 <div>
     <!-- Mục lục -->
     <details>
-    <summary>Mục lục</summary>
+        <summary><b>Mục lục<b></summary>
     <ol style="font-size:15px;">
         <li>
             <a href="#"><b>Giới thiệu tổng quan</b></a>
