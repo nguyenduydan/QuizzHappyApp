@@ -25,6 +25,6 @@ public class SlashActivity extends AppCompatActivity {
                 startActivity(new Intent(SlashActivity.this, LoginActivity.class));
                 finish();
             }
-        },2000);
+        },1200);
     }
 }
