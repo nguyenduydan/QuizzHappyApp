@@ -16,22 +16,8 @@
 ##
 
 <div>
-    <!-- Mục lục -->
-    <details>
-        <summary><b>Mục lục<b></summary>
-    <ol style="font-size:15px;">
-        <li>
-            <a href="#"><b>Giới thiệu tổng quan</b></a>
-            <ul>
-                <li><a href="#">App trắc nghiệm là gì?</a></li>
-                <li><a href="#">Một số điểm nổi bật về App trắc nghiệm</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#các-bài-thực-hành-đặc-biệt"><b>Đặc tả hệ thống</b></a>
-        </li>
-    </ol>
-    </details>
+    <h1><b>GIỚI THIỆU TỔNG QUAN</h1><br>
+    
 </div>
 
 </br>
