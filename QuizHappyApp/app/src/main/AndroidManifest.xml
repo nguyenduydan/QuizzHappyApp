@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizzHappyApp"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false"
+            />
         <activity
             android:name=".Activities.LoginActivity"
             android:exported="false" />

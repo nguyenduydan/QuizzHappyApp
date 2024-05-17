@@ -31,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.frame_fragment, fragment) // Sử dụng replace() để thay thế nếu đã có Fragment
                 .commit();
-
     }
+
+
 
 }

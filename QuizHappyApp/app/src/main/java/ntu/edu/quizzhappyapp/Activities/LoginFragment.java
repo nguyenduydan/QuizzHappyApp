@@ -1,5 +1,6 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,12 +16,16 @@ import ntu.edu.quizzhappyapp.R;
 
 public class LoginFragment extends Fragment {
 
+    Button btn_signup;
+    Button btn_login;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        Button btn_signup = view.findViewById(R.id.btn_signup);
+        btn_signup = view.findViewById(R.id.btn_signup);
+        btn_login = view.findViewById(R.id.btn_login_submit);
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +38,15 @@ public class LoginFragment extends Fragment {
                         .commit();
             }
         });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+                startActivity(mainActivity);
+            }
+        });
+
         return view;
     }
 }
