@@ -1,4 +1,4 @@
-package ntu.edu.quizzhappyapp.Activities;
+package ntu.edu.quizzhappyapp.Activities.Fragments;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import ntu.edu.quizzhappyapp.R;
 
-public class ListFragment extends Fragment {
+public class UserFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,6 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        return inflater.inflate(R.layout.fragment_user, container, false);
     }
 }

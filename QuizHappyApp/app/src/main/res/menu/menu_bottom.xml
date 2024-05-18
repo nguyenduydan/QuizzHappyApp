@@ -3,20 +3,16 @@
     <item
         android:id="@+id/home"
         android:title="Home"
-        android:icon="@drawable/ic_home"
-        >
-    </item>
+        android:icon="@drawable/ic_home"/>
+
     <item
-        android:id="@+id/info"
+        android:id="@+id/user"
         android:title="User"
-        android:icon="@drawable/ic_user"
-        >
-    </item>
+        android:icon="@drawable/ic_user"/>
+
     <item
         android:id="@+id/logout"
         android:title="Out"
-        android:icon="@drawable/logout"
-        >
-    </item>
+        android:icon="@drawable/logout" />
 
 </menu>
