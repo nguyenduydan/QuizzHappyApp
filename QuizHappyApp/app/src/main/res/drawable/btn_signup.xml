@@ -6,7 +6,6 @@
                 android:startColor="#2FEB00"
                 android:endColor="#057503"/>
             <corners android:radius="20dp"/>
-            <size android:width="273dp" android:height="43dp"/>
         </shape>
     </item>
 </selector>
