@@ -1,6 +1,8 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -71,9 +73,17 @@ public class LoginFragment extends Fragment {
                 }else {
                     Boolean checkUserPass = dbHelper.checkUsernamePassword(user,pass);
                     if(checkUserPass==true){
-                        Toast.makeText(getContext(),"Đăng nhập thành công!",Toast.LENGTH_SHORT).show();
+
+                        int userID = dbHelper.getID(user,pass);
+
+                        Bundle bundle = new Bundle();// Tạo Bundle để chứa dữ liệu cần truyền
+                        bundle.putInt("userID", userID);
+
                         Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+                        mainActivity.putExtras(bundle);// Đặt Bundle vào Intent
+                        Toast.makeText(getContext(),"Đăng nhập thành công! ",Toast.LENGTH_SHORT).show();
                         startActivity(mainActivity);
+
                     }else {
                         Toast.makeText(getContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
                     }

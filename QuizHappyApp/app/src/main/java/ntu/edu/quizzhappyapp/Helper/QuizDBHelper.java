@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -125,8 +128,10 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         Cursor cursor = db.rawQuery("select * from USERS where username=?", new String[]{username});
 
         if (cursor.getCount()>0){
+            cursor.close();
             return true;
         }else {
+            cursor.close();
             return false;
         }
     }
@@ -136,10 +141,55 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         Cursor cursor = db.rawQuery("select * from USERS where username=? and password=?", new String[]{username,password});
 
         if (cursor.getCount()>0){
+            // Đóng cursor để giải phóng tài nguyên
+            cursor.close();
             return true;
         }else {
+            // Đóng cursor để giải phóng tài nguyên
+            cursor.close();
             return false;
         }
-
     }
+
+    public int getID(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM USERS WHERE username=? AND password=?", new String[]{username, password});
+        int userID = 0;
+
+        if (cursor != null && cursor.moveToFirst()) {
+
+            int columnIndex = cursor.getColumnIndex(COLUMN_USER_ID);
+            userID = cursor.getInt(columnIndex);
+            cursor.close();
+        }
+
+        db.close();
+        return userID;
+    }
+
+    public String getUsername(int ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String username = null;
+
+        try {
+            // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
+            Cursor cursor = db.rawQuery("SELECT " + COLUMN_USERNAME + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                // Lấy giá trị username từ Cursor
+                int user = cursor.getColumnIndex(COLUMN_USERNAME);
+                username = cursor.getString(user);
+                cursor.close();
+            }
+        } catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        db.close();
+        return username;
+    }
+
 }

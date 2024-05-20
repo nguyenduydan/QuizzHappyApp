@@ -1,5 +1,7 @@
 package ntu.edu.quizzhappyapp.Activities.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -15,10 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ntu.edu.quizzhappyapp.Adapters.ListAdapter;
+import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
 import ntu.edu.quizzhappyapp.R;
 
@@ -27,6 +31,8 @@ public class ListFragment extends Fragment {
     ListAdapter adapter;
     ArrayList<TypeQues> list;
     RecyclerView recyclerView;
+    TextView tvUsername;
+    QuizDBHelper db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,27 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
+
         recyclerView = view.findViewById(R.id.ryclerView);
+        tvUsername = view.findViewById(R.id.tv_username);
+        db = new QuizDBHelper(getContext());
+        
+        //Hiển thị username ở ListFragment
+        // Lấy dữ liệu từ Intent của hoạt động chứa Fragment
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if (bundle != null) {
+            int userID = bundle.getInt("userID");
+            if(userID != -1) {
+                String userName = db.getUsername(userID);
+                if(userName != null) {
+                    tvUsername.setText(userName);
+                } else {
+                    Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(getContext(),"Không tìm thấy ID người dùng!",Toast.LENGTH_SHORT).show();
+            }
+        }
         //5. Tạo layout manager để đặt bố cục cho Recycler
         RecyclerView.LayoutManager layoutGrid = new GridLayoutManager(view.getContext(),2);
         recyclerView.setLayoutManager(layoutGrid);
