@@ -41,6 +41,10 @@ public class ListFragment extends Fragment {
         list = new ArrayList<TypeQues>();
         list.add(new TypeQues(1,"C++","cplus"));
         list.add(new TypeQues(2,"C#","cthang"));
+        list.add(new TypeQues(3,"C++","cplus"));
+        list.add(new TypeQues(4,"C#","cthang"));
+        list.add(new TypeQues(5,"C#","cthang"));
+        list.add(new TypeQues(6,"C#","cthang"));
     }
 
     @Override
@@ -58,15 +62,11 @@ public class ListFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null) {
             int userID = bundle.getInt("userID");
-            if(userID != -1) {
-                String userName = db.getUsername(userID);
-                if(userName != null) {
-                    tvUsername.setText(userName);
-                } else {
-                    Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
-                }
+            String userName = db.getUsername(userID);
+            if(userName != null) {
+                tvUsername.setText(userName);
             } else {
-                Toast.makeText(getContext(),"Không tìm thấy ID người dùng!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
             }
         }
         //5. Tạo layout manager để đặt bố cục cho Recycler

@@ -99,6 +99,7 @@
                    android:textSize="18dp" />
 
                <Button
+                   android:id="@+id/btn_edit_username"
                    android:layout_width="30dp"
                    android:layout_height="30dp"
                    android:background="@drawable/ic_chevron_right" />
@@ -128,6 +129,7 @@
                     android:textSize="18dp" />
 
                 <Button
+                    android:id="@+id/btn_edit_email"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_chevron_right" />
@@ -143,7 +145,7 @@
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center|left"
-                    android:text="Tên người dùng: "
+                    android:text="Mật khẩu: "
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -158,6 +160,7 @@
                     android:textSize="18dp" />
 
                 <Button
+                    android:id="@+id/btn_edit_pass"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_chevron_right" />

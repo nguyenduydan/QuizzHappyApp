@@ -3,14 +3,10 @@ package ntu.edu.quizzhappyapp.Helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class QuizDBHelper extends SQLiteOpenHelper  {
@@ -190,6 +186,55 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
 
         db.close();
         return username;
+    }
+
+    public String getEmail(int ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String email = null;
+
+        try {
+            // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
+            Cursor cursor = db.rawQuery("SELECT " + COLUMN_EMAIL + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                // Lấy giá trị username từ Cursor
+                int user = cursor.getColumnIndex(COLUMN_EMAIL);
+                email = cursor.getString(user);
+                cursor.close();
+            }
+        } catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        db.close();
+        return email;
+    }
+    public String getPassword(int ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String password = null;
+
+        try {
+            // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
+            Cursor cursor = db.rawQuery("SELECT " + COLUMN_PASSWORD + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                // Lấy giá trị username từ Cursor
+                int user = cursor.getColumnIndex(COLUMN_PASSWORD);
+                password = cursor.getString(user);
+                cursor.close();
+            }
+        } catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        db.close();
+        return password;
     }
 
 }

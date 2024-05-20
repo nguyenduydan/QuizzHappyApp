@@ -75,15 +75,16 @@ public class LoginFragment extends Fragment {
                     if(checkUserPass==true){
 
                         int userID = dbHelper.getID(user,pass);
-
-                        Bundle bundle = new Bundle();// Tạo Bundle để chứa dữ liệu cần truyền
-                        bundle.putInt("userID", userID);
-
-                        Intent mainActivity = new Intent(getActivity(), MainActivity.class);
-                        mainActivity.putExtras(bundle);// Đặt Bundle vào Intent
-                        Toast.makeText(getContext(),"Đăng nhập thành công! ",Toast.LENGTH_SHORT).show();
-                        startActivity(mainActivity);
-
+                        if(userID != -1){
+                            Bundle bundle = new Bundle();// Tạo Bundle để chứa dữ liệu cần truyền
+                            bundle.putInt("userID", userID);
+                            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
+                            mainActivity.putExtras(bundle);// Đặt Bundle vào Intent
+                            Toast.makeText(getContext(),"Đăng nhập thành công! ",Toast.LENGTH_SHORT).show();
+                            startActivity(mainActivity);
+                        }else{
+                            Toast.makeText(getContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
+                        }
                     }else {
                         Toast.makeText(getContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
                     }
