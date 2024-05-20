@@ -1,5 +1,6 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(new ntu.edu.quizzhappyapp.Activities.Fragments.ListFragment(),false);
                 } else if (itemID == R.id.user) {
                     loadFragment(new ntu.edu.quizzhappyapp.Activities.Fragments.UserFragment(),false);
+                } else if (itemID == R.id.logout) {
+                    Intent logout = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(logout);
                 }
                 return true;
             }
