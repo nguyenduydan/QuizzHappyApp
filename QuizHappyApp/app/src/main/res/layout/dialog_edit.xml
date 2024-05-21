@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:elevation="20dp"
+    android:padding="5dp"
+    android:layout_margin="16dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/bg_top_blue_dialog"
+        android:fontFamily="@font/oswald_bold"
+        android:gravity="center"
+        android:elevation="5dp"
+        android:text="Chỉnh sửa thông tin"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/corner_bottom"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập thông tin cần sửa"
+            android:background="@drawable/bg_edittextbox"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:layout_marginVertical="20dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="Đồng ý"
+                android:textSize="20dp"
+                android:layout_marginRight="50dp"
+                android:elevation="10dp"
+                android:background="@drawable/bg_btnlogin"
+                app:backgroundTint="@null"
+                />
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:text="Hủy"
+                android:elevation="10dp"
+                android:textSize="20dp"
+                android:background="@drawable/btn_cancel"
+                app:backgroundTint="@null"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -237,4 +237,37 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         return password;
     }
 
+    public Boolean editInfo(int ID, String type, String newValue){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values;
+        long result=0;
+        switch (type){
+            case "username":{
+                values = new ContentValues();
+                values.put(COLUMN_USERNAME, newValue);
+                result = db.update(TABLE_USERS, values, "userID = ?", new String[]{String.valueOf(ID)});
+                break;
+            }
+            case "password":{
+                values = new ContentValues();
+                values.put(COLUMN_PASSWORD, newValue);
+                result = db.update(TABLE_USERS, values, "userID = ?", new String[]{String.valueOf(ID)});
+                break;
+            }
+            case "email":{
+                values = new ContentValues();
+                values.put(COLUMN_EMAIL, newValue);
+                result = db.update(TABLE_USERS, values, "userID = ?", new String[]{String.valueOf(ID)});
+                break;
+            }
+        }
+
+        if(result == -1){
+            db.close();
+            return false;
+        }else {
+            db.close();
+            return true;
+        }
+    }
 }

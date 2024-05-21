@@ -67,4 +67,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentLayout, fragment);
         fragmentTransaction.commit();
     }
+
+    public void reloadFragment() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentLayout);
+        if (currentFragment != null) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentLayout, new UserFragment());
+            fragmentTransaction.commit();
+        }
+    }
 }
