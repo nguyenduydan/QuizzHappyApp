@@ -1,13 +1,22 @@
 package ntu.edu.quizzhappyapp.Activities.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +25,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import ntu.edu.quizzhappyapp.Activities.MainActivity;
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.R;
@@ -28,11 +41,19 @@ public class UserFragment extends Fragment {
     QuizDBHelper db;
     TextView username, password, email;
     EditText edtInfo;
-    Button btnEditUsername, btnEditEmail, btnEditPass,cancelDialog, submit;
+    ImageView userImg;
+    Button btnEditUsername, btnEditEmail, btnEditPass,cancelDialog, submit, editImg;
+    private static final int PICK_IMAGE = 1;
+    private static final int REQUEST_PERMISSION = 8888;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
+        }
     }
 
     @Override
@@ -48,6 +69,8 @@ public class UserFragment extends Fragment {
         btnEditUsername = view.findViewById(R.id.btn_edit_username);
         btnEditEmail = view.findViewById(R.id.btn_edit_email);
         btnEditPass = view.findViewById(R.id.btn_edit_pass);
+        editImg = view.findViewById(R.id.btn_edit_img);
+        userImg = view.findViewById(R.id.user_img);
 
         info();
         clickListener();
@@ -61,17 +84,16 @@ public class UserFragment extends Fragment {
             String userName = db.getUsername(userID);
             String userPass = db.getPassword(userID);
             String userEmail = db.getEmail(userID);
-            if(userName != null) {
-                username.setText(userName);
-                password.setText(userPass);
-                email.setText(userEmail);
-            } else {
-                Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
-            }
+//            String userAvatar = db.getImg(userID);
+
+            username.setText(userName);
+            password.setText(userPass);
+            email.setText(userEmail);
         }
     }
 
     public void clickListener(){
+
         btnEditUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +112,15 @@ public class UserFragment extends Fragment {
                 openDialogEdit(Gravity.CENTER,"password");
             }
         });
+
+//        editImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
+
 
     public void openDialogEdit(int gravity, String type){
         final Dialog dialog = new Dialog(getContext());

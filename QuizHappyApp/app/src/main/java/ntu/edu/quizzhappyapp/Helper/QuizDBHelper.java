@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
+import ntu.edu.quizzhappyapp.Models.TypeQues;
+
 public class QuizDBHelper extends SQLiteOpenHelper  {
     private static final String DATABASE_NAME = "QuizDB.db"; //Tên database
     private static final int DATABASE_VERSION = 1;//phiên bản
@@ -33,7 +37,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     private static final String COLUMN_TYPEQUESTION_ID = "typeID";
     private static final String COLUMN_QUESTION_QUES = "question";
     private static final String COLUMN_QUESTION_OPTION1 = "option1";
-    public static final String COLUMN_QUESTION_OPTION2 = "option2";
+    private static final String COLUMN_QUESTION_OPTION2 = "option2";
     private static final String COLUMN_QUESTION_OPTION3 = "option3";
     private static final String COLUMN_QUESTION_OPTION4 = "option4";
     private static final String COLUMN_QUESTION_OPTION_CORRECT = "option_correct";
@@ -197,7 +201,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             Cursor cursor = db.rawQuery("SELECT " + COLUMN_EMAIL + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
 
             if (cursor != null && cursor.moveToFirst()) {
-                // Lấy giá trị username từ Cursor
+                // Lấy giá trị email từ Cursor
                 int user = cursor.getColumnIndex(COLUMN_EMAIL);
                 email = cursor.getString(user);
                 cursor.close();
@@ -221,7 +225,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             Cursor cursor = db.rawQuery("SELECT " + COLUMN_PASSWORD + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
 
             if (cursor != null && cursor.moveToFirst()) {
-                // Lấy giá trị username từ Cursor
+                // Lấy giá trị password từ Cursor
                 int user = cursor.getColumnIndex(COLUMN_PASSWORD);
                 password = cursor.getString(user);
                 cursor.close();
@@ -269,5 +273,81 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             db.close();
             return true;
         }
+    }
+
+    public boolean updateImagerUser(int ID, String img){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_AVATAR,img);
+        long result = db.update(TABLE_USERS,values,"userID = ?", new String[]{String.valueOf(ID)});
+
+        if(result == -1){
+            db.close();
+            return false;
+        }else {
+            db.close();
+            return true;
+        }
+    }
+
+    public String getImg(int ID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String avatar = null;
+
+        try {
+            // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
+            Cursor cursor = db.rawQuery("SELECT " + COLUMN_AVATAR + " FROM USERS WHERE userID = ?", new String[]{String.valueOf(ID)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int user = cursor.getColumnIndex(COLUMN_AVATAR);
+                avatar = cursor.getString(user);
+                cursor.close();
+            }
+        } catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        db.close();
+        return avatar;
+    }
+
+    public Boolean insertDataToDatabase(int ID, String nameType, String img) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_TYPEQUES_ID,ID);
+        values.put(COLUMN_TYPEQUES_NAME,nameType);
+        values.put(COLUMN_TYPEQUES_IMAGE,img);
+
+        long result = db.insert(TABLE_TYPEQUES,null,values);
+        if(result == -1){
+            db.close();
+            return false;
+        }else {
+            db.close();
+            return true;
+        }
+    }
+    public ArrayList<TypeQues> loadBooksFromDatabase() {
+        ArrayList<TypeQues> ds = new ArrayList<>();
+        SQLiteDatabase dbReadable = this.getReadableDatabase();
+        String sqlSelect = "SELECT * FROM TYPEQUES;";
+        Cursor cs = dbReadable.rawQuery(sqlSelect, null);
+
+        if (cs.moveToFirst()) {
+            do {
+                int ID = cs.getInt(0);
+                String nameType = cs.getString(1);
+                String img = cs.getString(2);
+                TypeQues b = new TypeQues(ID, nameType, img);
+                ds.add(b);
+            } while (cs.moveToNext());
+        }
+        cs.close();
+        return ds;
     }
 }

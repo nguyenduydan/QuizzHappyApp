@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -16,10 +18,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     Context context;
     ArrayList<TypeQues> datas;
-
+    LayoutInflater mInfater;
     public ListAdapter(Context context, ArrayList<TypeQues> datas) {
         this.context = context;
         this.datas = datas;
+        mInfater = LayoutInflater.from(context);
     }
 
     @NonNull
@@ -59,6 +62,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             super(itemView);
             nameCaption = itemView.findViewById(R.id.nameType);
             imgView = itemView.findViewById(R.id.img_Type);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Toast.makeText(context, "Item clicked at position: " + position, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
     }
