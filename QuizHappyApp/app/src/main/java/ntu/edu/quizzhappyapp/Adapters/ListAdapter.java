@@ -1,6 +1,7 @@
 package ntu.edu.quizzhappyapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+
+import ntu.edu.quizzhappyapp.Activities.MainActivity;
+import ntu.edu.quizzhappyapp.Activities.QuestionActivity;
+import ntu.edu.quizzhappyapp.Models.Questions;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
 import ntu.edu.quizzhappyapp.R;
 
@@ -30,7 +35,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     public ListAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View viewItem = layoutInflater.inflate(R.layout.list_item, parent, false);
-        ListViewHolder viewHolder = new ListViewHolder(viewItem);
+        ListViewHolder viewHolder = new ListViewHolder(viewItem, context);
         return viewHolder;
     }
 
@@ -57,9 +62,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     public class ListViewHolder extends RecyclerView.ViewHolder{
         TextView nameCaption;
         ImageView imgView;
+        Context mContext;
 
-        public ListViewHolder(@NonNull View itemView) {
+        public ListViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
+            this.mContext = context;
             nameCaption = itemView.findViewById(R.id.nameType);
             imgView = itemView.findViewById(R.id.img_Type);
 
@@ -68,11 +75,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        Toast.makeText(context, "Item clicked at position: " + position, Toast.LENGTH_SHORT).show();
+                        Intent questions = new Intent(mContext, QuestionActivity.class);
+                        mContext.startActivity(questions);
+                        Toast.makeText(mContext, "Item clicked at position: " + position, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
-
     }
 }

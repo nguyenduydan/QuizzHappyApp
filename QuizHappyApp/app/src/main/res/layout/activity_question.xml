@@ -24,7 +24,7 @@
             android:layout_width="151dp"
             android:layout_height="63dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/circle_radient"
             android:gravity="center"
             android:text="C++"
@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:text="1/10"
             android:textColor="@color/white"
             android:textSize="40dp"
@@ -74,6 +75,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/tvQuestion"
             android:layout_width="366dp"
             android:layout_height="312dp"
             android:background="@drawable/question_board"
