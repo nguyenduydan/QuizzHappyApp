@@ -161,10 +161,12 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             int columnIndex = cursor.getColumnIndex(COLUMN_USER_ID);
             userID = cursor.getInt(columnIndex);
             cursor.close();
+            db.close();
+            return userID;
         }
 
         db.close();
-        return userID;
+        return -1;
     }
 
     public String getUsername(int ID) {
@@ -180,6 +182,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
                 int user = cursor.getColumnIndex(COLUMN_USERNAME);
                 username = cursor.getString(user);
                 cursor.close();
+                db.close();
+                return username;
             }
         } catch (SQLiteException e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
@@ -189,7 +193,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
 
         db.close();
-        return username;
+        return null;
     }
 
     public String getEmail(int ID) {
@@ -205,6 +209,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
                 int user = cursor.getColumnIndex(COLUMN_EMAIL);
                 email = cursor.getString(user);
                 cursor.close();
+                db.close();
+                return email;
             }
         } catch (SQLiteException e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
@@ -214,7 +220,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
 
         db.close();
-        return email;
+        return null;
     }
     public String getPassword(int ID) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -229,6 +235,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
                 int user = cursor.getColumnIndex(COLUMN_PASSWORD);
                 password = cursor.getString(user);
                 cursor.close();
+                db.close();
+                return password;
             }
         } catch (SQLiteException e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
@@ -238,7 +246,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
 
         db.close();
-        return password;
+        return null;
     }
 
     public Boolean editInfo(int ID, String type, String newValue){
@@ -303,6 +311,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
                 int user = cursor.getColumnIndex(COLUMN_AVATAR);
                 avatar = cursor.getString(user);
                 cursor.close();
+                db.close();
+                return avatar;
             }
         } catch (SQLiteException e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
@@ -312,7 +322,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
 
         db.close();
-        return avatar;
+        return null;
     }
 
     public Boolean insertDataToDatabase(int ID, String nameType, String img) {
@@ -332,7 +342,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             return true;
         }
     }
-    public ArrayList<TypeQues> loadBooksFromDatabase() {
+    public ArrayList<TypeQues> loadTypeQuesFromDatabase() {
         ArrayList<TypeQues> ds = new ArrayList<>();
         SQLiteDatabase dbReadable = this.getReadableDatabase();
         String sqlSelect = "SELECT * FROM TYPEQUES;";
@@ -349,5 +359,64 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
         cs.close();
         return ds;
+    }
+
+//    public int getIDTypeQues(){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TYPEQUES + " WHERE username=? AND password=?", new String[]{username, password});
+//        int typeID = 0;
+//
+//        if (cursor != null && cursor.moveToFirst()) {
+//
+//            int columnIndex = cursor.getColumnIndex(COLUMN_USER_ID);
+//            typeID = cursor.getInt(columnIndex);
+//            cursor.close();
+//        }
+//
+//        db.close();
+//        return typeID;
+//    }
+
+    public int getTypeID(int pos){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " +  TABLE_TYPEQUES + " WHERE typeID = ?", new String[]{String.valueOf(pos)});
+        int typeID = 0;
+
+        if (cursor != null && cursor.moveToFirst()) {
+
+            int columnIndex = cursor.getColumnIndex(COLUMN_TYPEQUES_ID);
+            typeID = cursor.getInt(columnIndex);
+            cursor.close();
+            db.close();
+            return typeID;
+        }
+        db.close();
+        return -1;
+    }
+
+    public String getTypeName(int ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String name = null;
+
+        try {
+            // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
+            Cursor cursor = db.rawQuery("SELECT * FROM TYPEQUES WHERE typeID = ?", new String[]{String.valueOf(ID)});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                // Lấy giá trị username từ Cursor
+                int pos = cursor.getColumnIndex(COLUMN_TYPEQUES_NAME);
+                name = cursor.getString(pos);
+                cursor.close();
+                return name;
+            }
+        } catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        db.close();
+        return null;
     }
 }

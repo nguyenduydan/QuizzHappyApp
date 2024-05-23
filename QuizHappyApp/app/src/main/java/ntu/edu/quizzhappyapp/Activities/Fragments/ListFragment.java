@@ -32,24 +32,6 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new QuizDBHelper(getContext());
-//        //thêm dữ liệu
-//        list = new ArrayList<TypeQues>();
-//        list.add(new TypeQues(1,"C++","cplus"));
-//        list.add(new TypeQues(2,"C#","cthang"));
-//        list.add(new TypeQues(3,"C++","cplus"));
-//        list.add(new TypeQues(4,"C#","cthang"));
-//        list.add(new TypeQues(5,"C#","cthang"));
-//        list.add(new TypeQues(6,"C#","cthang"));
-//        for (TypeQues item : list) {
-//            try{
-//                db.insertDataToDatabase(item.getTypeQuesID(), item.getNameType(), item.getImage());
-//                db.close();
-//            }catch (SQLiteException e){
-//                // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
-//                Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
-//                db.close();
-//            }
-//        }
     }
 
     @Override
@@ -71,7 +53,7 @@ public class ListFragment extends Fragment {
                 Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
             }
         }
-        list = db.loadBooksFromDatabase();
+        list = db.loadTypeQuesFromDatabase();
 
         //5. Tạo layout manager để đặt bố cục cho Recycler
         RecyclerView.LayoutManager layoutGrid = new GridLayoutManager(view.getContext(),2);

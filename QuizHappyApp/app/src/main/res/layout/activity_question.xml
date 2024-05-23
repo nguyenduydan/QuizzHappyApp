@@ -62,7 +62,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.448" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -77,7 +78,7 @@
         <TextView
             android:id="@+id/tvQuestion"
             android:layout_width="366dp"
-            android:layout_height="312dp"
+            android:layout_height="263dp"
             android:background="@drawable/question_board"
             android:gravity="center"
             android:paddingHorizontal="25dp"
@@ -235,6 +236,18 @@
                     app:layout_constraintStart_toStartOf="@+id/radioButton4"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_signup"
+                app:backgroundTint="@null"
+                android:drawableLeft="@drawable/ic_arrow_back"
+                android:text="Trở về"
+                android:textSize="25dp"
+                />
         </LinearLayout>
     </LinearLayout>
     
