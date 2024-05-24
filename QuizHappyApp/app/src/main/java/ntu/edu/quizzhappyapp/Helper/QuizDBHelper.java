@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import ntu.edu.quizzhappyapp.Models.Questions;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
 
 public class QuizDBHelper extends SQLiteOpenHelper  {
@@ -361,22 +362,6 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         return ds;
     }
 
-//    public int getIDTypeQues(){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TYPEQUES + " WHERE username=? AND password=?", new String[]{username, password});
-//        int typeID = 0;
-//
-//        if (cursor != null && cursor.moveToFirst()) {
-//
-//            int columnIndex = cursor.getColumnIndex(COLUMN_USER_ID);
-//            typeID = cursor.getInt(columnIndex);
-//            cursor.close();
-//        }
-//
-//        db.close();
-//        return typeID;
-//    }
-
     public int getTypeID(int pos){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " +  TABLE_TYPEQUES + " WHERE typeID = ?", new String[]{String.valueOf(pos)});
@@ -418,5 +403,29 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
 
         db.close();
         return null;
+    }
+
+    public ArrayList<Questions> loadQuestion(){
+        ArrayList<Questions> ds = new ArrayList<>();
+        SQLiteDatabase dbReadable = this.getReadableDatabase();
+        String sqlSelect = "SELECT * FROM QUESTION;";
+        Cursor cs = dbReadable.rawQuery(sqlSelect, null);
+
+        if (cs.moveToFirst()) {
+            do {
+                int ID = cs.getInt(0);
+                String question = cs.getString(1);
+                String option1 = cs.getString(2);
+                String option2 = cs.getString(3);
+                String option3 = cs.getString(4);
+                String option4 = cs.getString(5);
+                int quesTypeID = cs.getInt(6);
+                int optionCorrect = cs.getInt(7);
+                Questions b = new Questions(ID, question, quesTypeID,option1,option2,option3,option4,optionCorrect);
+                ds.add(b);
+            } while (cs.moveToNext());
+        }
+        cs.close();
+        return ds;
     }
 }

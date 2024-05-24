@@ -3,7 +3,7 @@ package ntu.edu.quizzhappyapp.Models;
 public class Questions {
     public int quesID;
     public String question;
-    public String quesTypeID;
+    public int quesTypeID;
     public String option1;
     public String option2;
     public String option3;
@@ -13,7 +13,7 @@ public class Questions {
     public Questions() {
     }
 
-    public Questions(int quesID, String question, String quesTypeID, String option1, String option2, String option3, String option4, int optionCorrect) {
+    public Questions(int quesID, String question, int quesTypeID, String option1, String option2, String option3, String option4, int optionCorrect) {
         this.quesID = quesID;
         this.question = question;
         this.quesTypeID = quesTypeID;
@@ -40,11 +40,11 @@ public class Questions {
         this.question = question;
     }
 
-    public String getQuesTypeID() {
+    public int getQuesTypeID() {
         return quesTypeID;
     }
 
-    public void setQuesTypeID(String quesTypeID) {
+    public void setQuesTypeID(int quesTypeID) {
         this.quesTypeID = quesTypeID;
     }
 

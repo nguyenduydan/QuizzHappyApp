@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/tvQuestion"
+            android:id="@+id/tv_Question"
             android:layout_width="366dp"
             android:layout_height="263dp"
             android:background="@drawable/question_board"
