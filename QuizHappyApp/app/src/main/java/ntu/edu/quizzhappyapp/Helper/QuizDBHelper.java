@@ -48,6 +48,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     private static final String COLUMN_RESULT_ID = "resultID";
     private static final String COLUMN_SCORE = "score";
     private static final String COLUMN_TIMESTAMP = "timestamp";
+    private static final String COLUMN_TYPEQUESID = "typeQuesID";
 
     // Câu lệnh tạo bảng cho bảng người dùng
     private static final String CREATE_TABLE_USERS =
@@ -428,4 +429,45 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         cs.close();
         return ds;
     }
+
+    public boolean insertResult(int score, String time , int typeID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_SCORE,score);
+        values.put(COLUMN_TIMESTAMP,time);
+        values.put(COLUMN_TYPEQUESID,typeID);
+
+        long result = db.insert(TABLE_RESULTS,null,values);
+        db.close();
+        return result != -1;
+    }
+
+    public boolean isResultExist(int typeID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT 1 FROM " + TABLE_RESULTS + " WHERE " + COLUMN_TYPEQUESID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(typeID)});
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+
+    public boolean updateResult(int score, String time, int typeID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_SCORE, score);
+        values.put(COLUMN_TIMESTAMP, time);
+        values.put(COLUMN_TYPEQUESID, typeID);
+
+        String whereClause = COLUMN_TYPEQUESID + " = ?";
+        String[] whereArgs = {String.valueOf(typeID)};
+
+        int rowsAffected = db.update(TABLE_RESULTS, values, whereClause, whereArgs);
+        db.close();
+        return rowsAffected > 0;
+    }
+
 }

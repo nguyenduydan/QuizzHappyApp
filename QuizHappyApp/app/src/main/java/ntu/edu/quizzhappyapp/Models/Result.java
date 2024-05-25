@@ -6,8 +6,24 @@ public class Result {
     public int resultID;
     public int score;
     public String timeStamp;
+    public int typeQuesID;
 
     public Result() {
+    }
+
+    public Result(int resultID, int score, String timeStamp, int typeQuesID) {
+        this.resultID = resultID;
+        this.score = score;
+        this.timeStamp = timeStamp;
+        this.typeQuesID = typeQuesID;
+    }
+
+    public int getTypeQuesID() {
+        return typeQuesID;
+    }
+
+    public void setTypeQuesID(int typeQuesID) {
+        this.typeQuesID = typeQuesID;
     }
 
     public int getResultID() {
