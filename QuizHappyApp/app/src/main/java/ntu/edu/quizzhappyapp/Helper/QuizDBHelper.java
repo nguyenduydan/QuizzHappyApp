@@ -454,20 +454,24 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     }
 
 
-    public boolean updateResult(int score, String time, int typeID) {
+    public void updateResult(int score, String time, int typeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        try {
+            values.put(COLUMN_SCORE, score);
+            values.put(COLUMN_TIMESTAMP, time);
+            values.put(COLUMN_TYPEQUESID, typeID);
 
-        values.put(COLUMN_SCORE, score);
-        values.put(COLUMN_TIMESTAMP, time);
-        values.put(COLUMN_TYPEQUESID, typeID);
+            String whereClause = COLUMN_TYPEQUESID + " = ?";
+            String[] whereArgs = {String.valueOf(typeID)};
 
-        String whereClause = COLUMN_TYPEQUESID + " = ?";
-        String[] whereArgs = {String.valueOf(typeID)};
-
-        int rowsAffected = db.update(TABLE_RESULTS, values, whereClause, whereArgs);
-        db.close();
-        return rowsAffected > 0;
+            db.update(TABLE_RESULTS, values, whereClause, whereArgs);
+            db.close();
+        }catch (SQLiteException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra khi thực hiện truy vấn SQL
+            Log.e("SQLiteException", "Error executing SQL query: " + e.getMessage());
+            db.close();
+        }
     }
 
 }

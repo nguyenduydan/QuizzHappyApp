@@ -1,5 +1,6 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -150,10 +151,12 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(checkAnswer(list.get(quesCurrent), typeBtn)){
                     typeBtn.setBackground(drawable_T);
+                    typeBtn.setTextColor(Color.GREEN);
                     totalPoint += pointsPerQuestion;
                 }
                 else {
                     typeBtn.setBackground(drawable_F);
+                    typeBtn.setTextColor(Color.RED);
                 }
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -190,10 +193,15 @@ public class QuestionActivity extends AppCompatActivity {
             countDownTimer.cancel();
         }
         Drawable drawable = getResources().getDrawable(R.drawable.btn_bg_question);
+        //Thiết lập lại màu cũ
         rb1.setBackground(drawable);
         rb2.setBackground(drawable);
         rb3.setBackground(drawable);
         rb4.setBackground(drawable);
+        rb1.setTextColor(Color.BLACK);
+        rb2.setTextColor(Color.BLACK);
+        rb3.setTextColor(Color.BLACK);
+        rb4.setTextColor(Color.BLACK);
         // Tăng chỉ số câu hỏi hiện tại
         quesCurrent++;
         totalQues = list.size();
@@ -202,20 +210,15 @@ public class QuestionActivity extends AppCompatActivity {
             int id = getID(); // ID của loại câu hỏi (typeID)
             Date currentTime = new Date();
             String time = currentTime.toString();
-            boolean result;
             boolean isResultExis = db.isResultExist(id);
             if (isResultExis) {
-                result = db.updateResult(totalPoint, time, id);
+                db.updateResult(totalPoint, time, id);
             } else {
-                result = db.insertResult(totalPoint, time, id);
+                db.insertResult(totalPoint, time, id);
             }
 
-            if (!result) {
-                Toast.makeText(this, "Không lưu được!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Lưu được! " + totalPoint, Toast.LENGTH_SHORT).show();
-            }
-
+            Intent resultActivity = new Intent(QuestionActivity.this,ResultActivity.class);
+            startActivity(resultActivity);
             Toast.makeText(this, "Bạn đã hoàn thành tất cả các câu hỏi!", Toast.LENGTH_SHORT).show();
             // Bạn có thể thực hiện thêm hành động nào đó khi hoàn thành tất cả các câu hỏi
             return;

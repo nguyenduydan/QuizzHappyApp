@@ -37,6 +37,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.mikhaellopez:circularimageview:4.3.1")
-    implementation("com.github.lzyzsd:circleprogress:1.2.1")
 }
