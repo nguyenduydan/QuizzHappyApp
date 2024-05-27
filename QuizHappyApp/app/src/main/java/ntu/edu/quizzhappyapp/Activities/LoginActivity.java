@@ -25,12 +25,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        //Khai báo các hàm
+        // Tạo một instance của LoginFragment
         Fragment fragment = new LoginFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_fragment, fragment) // Sử dụng replace() để thay thế nếu đã có Fragment
+
+        // Bắt đầu một giao dịch Fragment
+        getSupportFragmentManager().beginTransaction()
+
+                // Thay thế Fragment hiện tại (nếu có) tại vị trí R.id.frame_fragment
+                // bằng Fragment mới được chỉ định
+                .replace(R.id.frame_fragment, fragment)
+
+                // Hoàn thành giao dịch, làm cho thay đổi trở thành hiệu lực
                 .commit();
+
     }
 
 
