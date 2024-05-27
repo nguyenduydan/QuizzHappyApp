@@ -141,7 +141,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     }
 
     public boolean checkUsernamePassword(String username, String password){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from USERS where username=? and password=?", new String[]{username,password});
 
         if (cursor.getCount()>0){
