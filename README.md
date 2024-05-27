@@ -17,7 +17,7 @@
 
 <div>
     <h1><b>GIỚI THIỆU TỔNG QUAN</h1><br>
-    
+    <img src="login.gif" alt="gif" width="auto" height="300">
 </div>
 
 </br>
