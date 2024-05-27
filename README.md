@@ -23,14 +23,12 @@
 </br>
 <div>
         <h1><b>Màn hình đăng nhập và đăng ký</h1>
-      | Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
         <img src="Img/signup.gif" alt="gif" width="auto" height="500">
         <img src="Img/login.gif" alt="gif" width="auto" height="500">
-        
-        
 </div>
+             | Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
 </br>
 <div align="center">
         <h1><b>Chức năng upload ảnh từ thư viện điện thoại</h1>
