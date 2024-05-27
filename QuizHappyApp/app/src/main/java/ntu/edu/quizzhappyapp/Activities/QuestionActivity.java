@@ -176,7 +176,7 @@ public class QuestionActivity extends AppCompatActivity {
                     public void run() {
                         nextQuestion();
                     }
-                }, 500);
+                }, 200);
             }
         });
     }
