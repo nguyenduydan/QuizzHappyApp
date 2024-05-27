@@ -98,7 +98,7 @@ public class ResultActivity extends AppCompatActivity {
                         if(i <= (int)percentage){
                             progressBar.setProgress(i);
                             i++;
-                            delay +=2;
+                            delay +=1;
                             handler.postDelayed(this,delay);
                         }else {
                             handler.removeCallbacks(this);
