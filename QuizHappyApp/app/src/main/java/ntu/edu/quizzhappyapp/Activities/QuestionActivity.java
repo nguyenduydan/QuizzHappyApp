@@ -65,8 +65,6 @@ public class QuestionActivity extends AppCompatActivity {
         tvTimeCount = findViewById(R.id.tv_timeCount);
         tvCountQues = findViewById(R.id.tv_countQues);
 
-
-
         showInfo();
         onClickListener();
 

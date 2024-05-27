@@ -329,23 +329,6 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         return null;
     }
 
-    public Boolean insertDataToDatabase(int ID, String nameType, String img) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(COLUMN_TYPEQUES_ID,ID);
-        values.put(COLUMN_TYPEQUES_NAME,nameType);
-        values.put(COLUMN_TYPEQUES_IMAGE,img);
-
-        long result = db.insert(TABLE_TYPEQUES,null,values);
-        if(result == -1){
-            db.close();
-            return false;
-        }else {
-            db.close();
-            return true;
-        }
-    }
     public ArrayList<TypeQues> loadTypeQuesFromDatabase() {
         ArrayList<TypeQues> ds = new ArrayList<>();
         SQLiteDatabase dbReadable = this.getReadableDatabase();

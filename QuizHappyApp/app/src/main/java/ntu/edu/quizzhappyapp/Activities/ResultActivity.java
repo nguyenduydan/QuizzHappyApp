@@ -42,7 +42,7 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         db = new QuizDBHelper(this);
-        btnBack = findViewById(R.id.appCompatButton);
+        btnBack = findViewById(R.id.btn_back);
         img = findViewById(R.id.gifImg);
         quesCorrect = findViewById(R.id.tvCorrectCount);
         quesWrong = findViewById(R.id.tvWrongCount);
