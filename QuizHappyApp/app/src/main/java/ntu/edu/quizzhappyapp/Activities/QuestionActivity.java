@@ -94,7 +94,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         list = new ArrayList<>();
-        list = db.loadQuestion();
+        list = db.loadQuestion(ID);
 
         totalQues = list.size();
         tvCountQues.setText((quesCurrent + 1) + "/" + totalQues);
