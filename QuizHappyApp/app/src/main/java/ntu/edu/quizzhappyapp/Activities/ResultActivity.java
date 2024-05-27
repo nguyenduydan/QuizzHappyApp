@@ -3,6 +3,7 @@ package ntu.edu.quizzhappyapp.Activities;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,9 @@ public class ResultActivity extends AppCompatActivity {
     QuizDBHelper db;
     Result resultData;
     ProgressBar progressBar;
+    int i=0;
+    int delay=5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,22 @@ public class ResultActivity extends AppCompatActivity {
                 time.setText(resultData.getTimeStamp());
                 double percentage = (double) anwTrue / totalques * 100;
                 percent.setText(String.format("%.0f%%", percentage));
+                final Handler handler = new Handler();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(i <= (int)percentage){
+                            progressBar.setProgress(i);
+                            i++;
+                            delay +=2;
+                            handler.postDelayed(this,delay);
+                        }else {
+                            handler.removeCallbacks(this);
+                        }
+                    }
+                },delay);
+
             }else {
                 Toast.makeText(this, "Lỗi",Toast.LENGTH_SHORT).show();
             }
