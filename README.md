@@ -23,9 +23,11 @@
 </br>
 <div>
         <h1><b>Màn hình đăng nhập và đăng ký</h1>
-        |              Màn hình đăng ký                                 |             Màn hình đăng nhập                               |
-        | :------------------------------------------------------------ | :----------------------------------------------------------- |
-        | <img src="Img/signup.gif" alt="gif" width="auto" height="500">| <img src="Img/login.gif" alt="gif" width="auto" height="500">|
+      | Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+        <img src="Img/signup.gif" alt="gif" width="auto" height="500">
+        <img src="Img/login.gif" alt="gif" width="auto" height="500">
         
         
 </div>
