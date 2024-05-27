@@ -3,11 +3,8 @@ package ntu.edu.quizzhappyapp.Activities.Fragments;
 import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -29,15 +26,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import ntu.edu.quizzhappyapp.Activities.MainActivity;
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.R;
@@ -163,7 +159,9 @@ public class UserFragment extends Fragment {
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
         inputStream.close();
 
-        String imageName = "user_avatar_" + userID + ".png";
+        // Tạo tên độc đáo cho ảnh dựa trên thời gian hiện tại
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageName = "user_avatar_" + userID + "_" + timeStamp + ".png";
         File file = new File(getContext().getFilesDir(), imageName);
         FileOutputStream fos = new FileOutputStream(file);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);

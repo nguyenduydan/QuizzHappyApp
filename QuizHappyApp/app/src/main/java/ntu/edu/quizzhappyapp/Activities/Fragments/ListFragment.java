@@ -73,7 +73,7 @@ public class ListFragment extends Fragment {
         }
         list = db.loadTypeQuesFromDatabase();
 
-        //5. Tạo layout manager để đặt bố cục cho Recyc ler
+        //5. Tạo layout manager để đặt bố cục cho Recycler
         RecyclerView.LayoutManager layoutGrid = new GridLayoutManager(view.getContext(),2);
         recyclerView.setLayoutManager(layoutGrid);
         //6. Tạo adapter gắn vào nguồn dữ liệu

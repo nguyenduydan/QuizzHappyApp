@@ -141,7 +141,7 @@ public class QuestionActivity extends AppCompatActivity {
                 if (secondsRemaining <= 10) {
                     tvTimeCount.setTextColor(Color.RED);
                 } else {
-                    tvTimeCount.setTextColor(Color.WHITE); // Đặt lại màu đen nếu còn hơn 10 giây
+                    tvTimeCount.setTextColor(Color.WHITE); // Đặt lại màu trắng nếu còn hơn 10 giây
                 }
             }
 
