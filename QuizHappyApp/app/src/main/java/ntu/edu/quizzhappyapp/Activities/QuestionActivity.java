@@ -1,14 +1,20 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +37,8 @@ import ntu.edu.quizzhappyapp.R;
 public class QuestionActivity extends AppCompatActivity {
 
     RadioButton rb1,rb2,rb3,rb4;
-    Button btnBack;
-    TextView tvTypeQues, tvCountQues, tvTimeCount,tvQuestion;
+    Button btnBack, btnOk;
+    TextView tvTypeQues, tvCountQues, tvTimeCount,tvQuestion,tvInfo;
     QuizDBHelper db;
     int quesCurrent, totalQues;
     ArrayList<Questions> list;
@@ -56,12 +64,14 @@ public class QuestionActivity extends AppCompatActivity {
         tvTimeCount = findViewById(R.id.tv_timeCount);
         tvCountQues = findViewById(R.id.tv_countQues);
 
+
+
         showInfo();
         onClickListener();
 
     }
 
-    private int getID(){
+    private int getTypeID(){
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             return bundle.getInt("typeID");
@@ -70,10 +80,9 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-
     private void showInfo() {
         quesCurrent = 0; // Khởi tạo chỉ số câu hỏi hiện tại
-        int ID = getID();
+        int ID = getTypeID();
         if(ID == -1){
             Toast.makeText(QuestionActivity.this, "Lỗi không tìm thấy ID", Toast.LENGTH_SHORT).show();
         }else{
@@ -149,7 +158,10 @@ public class QuestionActivity extends AppCompatActivity {
         typeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkAnswer(list.get(quesCurrent), typeBtn)){
+                Questions currentQuestion = list.get(quesCurrent);
+                Log.e("CurrentQuestion", currentQuestion.toString());
+
+                if(checkAnswer(currentQuestion, typeBtn)){
                     typeBtn.setBackground(drawable_T);
                     typeBtn.setTextColor(Color.GREEN);
                     totalPoint += pointsPerQuestion;
@@ -163,14 +175,20 @@ public class QuestionActivity extends AppCompatActivity {
                     public void run() {
                         nextQuestion();
                     }
-                }, 1500);
+                }, 500);
             }
         });
     }
     private boolean checkAnswer(Questions question, RadioButton selectedRadioButton) {
         int selectedOptionId =getPos(selectedRadioButton);
         int correctOptionId = question.getOptionCorrect();
-        return selectedOptionId == correctOptionId;
+
+        Log.e("selectedOptionId", String.valueOf(selectedOptionId));
+        Log.e("correctOptionId", String.valueOf(correctOptionId));
+
+        if(selectedOptionId == correctOptionId)
+            return true;
+        return false;
     }
 
     private int getPos(RadioButton selectBtn){
@@ -207,7 +225,7 @@ public class QuestionActivity extends AppCompatActivity {
         totalQues = list.size();
         // Kiểm tra nếu đã hết câu hỏi
         if (quesCurrent >= list.size()) {
-            int id = getID(); // ID của loại câu hỏi (typeID)
+            int id = getTypeID(); // ID của loại câu hỏi (typeID)
             Date currentTime = new Date();
             String time = currentTime.toString();
             boolean isResultExis = db.isResultExist(id);
@@ -217,10 +235,8 @@ public class QuestionActivity extends AppCompatActivity {
                 db.insertResult(totalPoint, time, id);
             }
 
-            Intent resultActivity = new Intent(QuestionActivity.this,ResultActivity.class);
-            startActivity(resultActivity);
-            Toast.makeText(this, "Bạn đã hoàn thành tất cả các câu hỏi!", Toast.LENGTH_SHORT).show();
-            // Bạn có thể thực hiện thêm hành động nào đó khi hoàn thành tất cả các câu hỏi
+            openDialogOk(Gravity.CENTER);
+            tvInfo.setText("Đã hoàn thành");
             return;
         }
         tvCountQues.setText((quesCurrent + 1)+"/"+totalQues);
@@ -228,5 +244,50 @@ public class QuestionActivity extends AppCompatActivity {
         displayQuestion(list.get(quesCurrent));
     }
 
+    public void openDialogOk(int gravity){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_success);
+        Window window = dialog.getWindow();
+        if (window == null){
+            return;
+        }
 
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
+            dialog.setCancelable(true);
+        }else {
+            dialog.setCancelable(false);
+        }
+        btnOk =dialog.findViewById(R.id.btn_submit);
+        tvInfo = dialog.findViewById(R.id.tv_Info);
+        ImageView img = dialog.findViewById(R.id.gifImg);
+        Glide.with(this)
+                .asGif()
+                .centerCrop()
+                .load(R.drawable.tick)
+                .into(img);
+        Intent resultActivity = new Intent(QuestionActivity.this,ResultActivity.class);
+        Bundle bundle = getIntent().getExtras();
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (bundle != null) {
+                    int userID = bundle.getInt("userID");
+                    bundle.putInt("userID",userID);
+                    resultActivity.putExtras(bundle);
+                }
+                startActivity(resultActivity);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 }

@@ -1,26 +1,38 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.R;
 
 public class SignUpFragment extends Fragment {
 
     EditText username, password,repassword, email;
+    TextView error,info;
     ImageButton btn_showPwd;
-    Button signup,btn_login;
+    Button signup,btn_login,btnOk,btnTry;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +78,8 @@ public class SignUpFragment extends Fragment {
                 String mail = email.getText().toString();
 
                 if(TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass) || TextUtils.isEmpty(mail)){ //kiểm tra có để trống hay không
-                    Toast.makeText(getContext(),"Không được để trống!",Toast.LENGTH_SHORT).show();
+                    openDialogError(Gravity.CENTER);
+                    error.setText("Không được để trống!");
                 }else {
                     if(pass.equals(repass)) { // kiểm tra nhập lại mật khẩu có bằng với mật khẩu hay không
                         Boolean checkUser = dbHelper.checkUsername(user);
@@ -74,20 +87,19 @@ public class SignUpFragment extends Fragment {
                         {
                             Boolean insert = dbHelper.insertDataSignUp(user, pass, mail); //thêm dữ liệu vào data
                             if (insert == true){
-                                Toast.makeText(getContext(),"Đăng kí thành công!",Toast.LENGTH_SHORT).show();
-                                Fragment fragment = new LoginFragment();
-                                getParentFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.frame_fragment, fragment)
-                                        .commit();
+                                openDialogOk(Gravity.CENTER);
+                                info.setText("Đăng kí thành công");
                             }else {
-                                Toast.makeText(getContext(),"Đăng kí thất bại!",Toast.LENGTH_SHORT).show();
+                                openDialogError(Gravity.CENTER);
+                                error.setText("Đăng kí thất bại!");
                             }
                         }else{
-                            Toast.makeText(getContext(),"Tên người dùng đã tồn tại!",Toast.LENGTH_SHORT).show();
+                            openDialogError(Gravity.CENTER);
+                            error.setText("Tên người dùng đã tồn tại!");
                         }
                     }else {
-                        Toast.makeText(getContext(),"Mật khẩu không trùng khớp!",Toast.LENGTH_SHORT).show();
+                        openDialogError(Gravity.CENTER);
+                        error.setText("Mật khẩu không trùng khớp!");
                     }
                 }
             }
@@ -138,4 +150,89 @@ public class SignUpFragment extends Fragment {
             }
         });
     }
+    public void openDialogOk(int gravity){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_success);
+
+        Window window = dialog.getWindow();
+        if (window == null){
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
+            dialog.setCancelable(true);
+        }else {
+            dialog.setCancelable(false);
+        }
+        btnOk =dialog.findViewById(R.id.btn_submit);
+        info = dialog.findViewById(R.id.tv_Info);
+        ImageView img = dialog.findViewById(R.id.gifImg);
+        Glide.with(this)
+                .asGif()
+                .centerCrop()
+                .load(R.drawable.tick)
+                .into(img);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new LoginFragment();
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_fragment, fragment)
+                        .commit();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void openDialogError(int gravity){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_danger);
+
+        Window window = dialog.getWindow();
+        if (window == null){
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
+            dialog.setCancelable(true);
+        }else {
+            dialog.setCancelable(false);
+        }
+        btnTry =dialog.findViewById(R.id.btn_try);
+        error = dialog.findViewById(R.id.tv_error);
+        ImageView img = dialog.findViewById(R.id.gifImgEr);
+        Glide.with(this)
+                .asGif()
+                .centerCrop()
+                .load(R.drawable.xstick)
+                .into(img);
+
+        btnTry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 }

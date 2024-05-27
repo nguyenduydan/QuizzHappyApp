@@ -1,5 +1,6 @@
 package ntu.edu.quizzhappyapp.Activities.Fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+
+import ntu.edu.quizzhappyapp.Activities.ResultActivity;
 import ntu.edu.quizzhappyapp.Adapters.ListAdapter;
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
@@ -44,8 +47,9 @@ public class ListFragment extends Fragment {
         //Hiển thị username ở ListFragment
         // Lấy dữ liệu từ Intent của hoạt động chứa Fragment
         Bundle bundle = getActivity().getIntent().getExtras();
+        int userID =0;
         if (bundle != null) {
-            int userID = bundle.getInt("userID");
+            userID = bundle.getInt("userID");
             String userName = db.getUsername(userID);
             if(userName != null) {
                 tvUsername.setText(userName);
@@ -55,11 +59,11 @@ public class ListFragment extends Fragment {
         }
         list = db.loadTypeQuesFromDatabase();
 
-        //5. Tạo layout manager để đặt bố cục cho Recycler
+        //5. Tạo layout manager để đặt bố cục cho Recyc ler
         RecyclerView.LayoutManager layoutGrid = new GridLayoutManager(view.getContext(),2);
         recyclerView.setLayoutManager(layoutGrid);
         //6. Tạo adapter gắn vào nguồn dữ liệu
-        adapter = new ListAdapter(view.getContext(), list);
+        adapter = new ListAdapter(view.getContext(), list, userID);
         //7, Gắn adapter vào Recycler
         recyclerView.setAdapter(adapter);
 

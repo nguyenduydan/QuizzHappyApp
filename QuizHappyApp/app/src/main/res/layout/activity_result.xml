@@ -9,14 +9,14 @@
     tools:context=".Activities.ResultActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/gifImg"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/congrat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -26,16 +26,16 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+        app:layout_constraintTop_toBottomOf="@+id/gifImg">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Correct: "
+                android:text="Câu đúng: "
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold" />
@@ -57,15 +57,61 @@
             android:layout_marginTop="10dp">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Wrong: "
+                android:text="Câu sai: "
                 android:textColor="@color/white"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvWrongCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Thời gian: "
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Điểm: "
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"

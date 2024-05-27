@@ -23,7 +23,13 @@ public class Questions {
         this.option4 = option4;
         this.optionCorrect = optionCorrect;
     }
-
+    @Override
+    public String toString() {
+        return "Questions{" +
+                "questionText='" + question + "\n" +
+                "CorrectOptionId=" + optionCorrect +
+                '}';
+    }
     public int getQuesID() {
         return quesID;
     }

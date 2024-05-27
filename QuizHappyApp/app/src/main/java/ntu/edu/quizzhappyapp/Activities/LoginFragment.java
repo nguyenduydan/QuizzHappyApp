@@ -1,32 +1,39 @@
 package ntu.edu.quizzhappyapp.Activities;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.R;
 
 public class LoginFragment extends Fragment {
 
-    Button btn_signup,btn_login;
+    Button btn_signup,btn_login, btnOk,btnTry;
     ImageButton btn_showPwd;
+    TextView errorTxt, infoTxt;
     EditText username, password;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +48,7 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.edt_pwd);
         btn_showPwd = view.findViewById(R.id.showPwd);
 
+
         //Xử lý sự kiện
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +61,6 @@ public class LoginFragment extends Fragment {
                         .commit();
             }
         });
-
         login();
         showPassword();
 
@@ -76,17 +83,15 @@ public class LoginFragment extends Fragment {
 
                         int userID = dbHelper.getID(user,pass);
                         if(userID != -1){
-                            Bundle bundle = new Bundle();// Tạo Bundle để chứa dữ liệu cần truyền
-                            bundle.putInt("userID", userID);
-                            Intent mainActivity = new Intent(getActivity(), MainActivity.class);
-                            mainActivity.putExtras(bundle);// Đặt Bundle vào Intent
-                            Toast.makeText(getContext(),"Đăng nhập thành công! ",Toast.LENGTH_SHORT).show();
-                            startActivity(mainActivity);
+                            openDialogOk(Gravity.CENTER,userID);
+                            infoTxt.setText("Đăng nhập thành công");
                         }else{
-                            Toast.makeText(getContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
+                            openDialogError(Gravity.CENTER);
+                            errorTxt.setText("Đăng nhập thất bại");
                         }
                     }else {
-                        Toast.makeText(getContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
+                        openDialogError(Gravity.CENTER);
+                        errorTxt.setText("Đăng nhập thất bại");
                     }
                 }
             }
@@ -122,5 +127,89 @@ public class LoginFragment extends Fragment {
                 password.setSelection(cursorPosition);
             }
         });
+    }
+    public void openDialogOk(int gravity, int userID){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_success);
+
+        Window window = dialog.getWindow();
+        if (window == null){
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
+            dialog.setCancelable(true);
+        }else {
+            dialog.setCancelable(false);
+        }
+        btnOk =dialog.findViewById(R.id.btn_submit);
+        infoTxt = dialog.findViewById(R.id.tv_Info);
+        ImageView img = dialog.findViewById(R.id.gifImg);
+        Glide.with(this)
+                .asGif()
+                .centerCrop()
+                .load(R.drawable.tick)
+                .into(img);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();// Tạo Bundle để chứa dữ liệu cần truyền
+                bundle.putInt("userID", userID);
+                Intent mainActivity = new Intent(getContext(),MainActivity.class);
+                mainActivity.putExtras(bundle);// Đặt Bundle vào Intent
+                startActivity(mainActivity);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void openDialogError(int gravity){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_danger);
+
+        Window window = dialog.getWindow();
+        if (window == null){
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
+            dialog.setCancelable(true);
+        }else {
+            dialog.setCancelable(false);
+        }
+        btnTry =dialog.findViewById(R.id.btn_try);
+        errorTxt = dialog.findViewById(R.id.tv_error);
+        ImageView img = dialog.findViewById(R.id.gifImgEr);
+        Glide.with(this)
+                .asGif()
+                .centerCrop()
+                .load(R.drawable.xstick)
+                .into(img);
+
+        btnTry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

@@ -420,8 +420,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
                 String option2 = cs.getString(3);
                 String option3 = cs.getString(4);
                 String option4 = cs.getString(5);
-                int quesTypeID = cs.getInt(6);
-                int optionCorrect = cs.getInt(7);
+                int quesTypeID = cs.getInt(7);
+                int optionCorrect = cs.getInt(6);
                 Questions b = new Questions(ID, question, quesTypeID,option1,option2,option3,option4,optionCorrect);
                 ds.add(b);
             } while (cs.moveToNext());
@@ -453,7 +453,6 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         return exists;
     }
 
-
     public void updateResult(int score, String time, int typeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -473,5 +472,10 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             db.close();
         }
     }
+
+//    public boolean getResult(int typeID){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = new
+//    }
 
 }

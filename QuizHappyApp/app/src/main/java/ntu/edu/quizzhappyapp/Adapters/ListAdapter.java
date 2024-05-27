@@ -3,6 +3,7 @@ package ntu.edu.quizzhappyapp.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     Context context;
     ArrayList<TypeQues> datas;
     LayoutInflater mInfater;
-    public ListAdapter(Context context, ArrayList<TypeQues> datas) {
+    int userID;
+    public ListAdapter(Context context, ArrayList<TypeQues> datas,int userID) {
         this.context = context;
         this.datas = datas;
+        this.userID = userID;
         mInfater = LayoutInflater.from(context);
     }
 
@@ -78,12 +81,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 public void onClick(View v) {
                     db = new QuizDBHelper(mContext);
                     int position = getAdapterPosition();
+                    Bundle bundle = new Bundle();
                     if (position != RecyclerView.NO_POSITION) {
                         int ID = db.getTypeID(position + 1);
                         if (ID != -1) {
                             Intent questions = new Intent(mContext, QuestionActivity.class);
-                            Bundle bundle = new Bundle();
                             bundle.putInt("typeID", ID);
+                            bundle.putInt("userID",userID);
                             questions.putExtras(bundle);
                             mContext.startActivity(questions);
                         }
