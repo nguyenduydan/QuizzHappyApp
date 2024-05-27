@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
         //Khai báo các hàm
-        Fragment fragment = new LoginFragment(); // Không cần truyền FragmentManager
+        Fragment fragment = new LoginFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_fragment, fragment) // Sử dụng replace() để thay thế nếu đã có Fragment
