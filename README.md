@@ -32,6 +32,11 @@
         <img src="Img/editimg.gif" alt="gif" width="auto" height="500">
 </div>
 </br>
+<div align="center">
+        <h1><b>Chức năng chỉnh sửa thông tin người dùng</h1>
+        <img src="Img/edit.gif" alt="gif" width="auto" height="500">
+</div>
+</br>
 
 ![Static Badge](https://img.shields.io/badge/ASUS-blue?style=for-the-badge&logo=asus) ![Static Badge](https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github) ![Static Badge](https://img.shields.io/badge/Java-green?style=for-the-badge)![Static Badge](https://img.shields.io/badge/C%23-purple?style=for-the-badge&logo=C%23) ![Static Badge](https://img.shields.io/badge/HTML-orange?style=for-the-badge&logo=HTML5) ![Static Badge](https://img.shields.io/badge/CSS-magenta?style=for-the-badge&logo=Css3)
 [![Bootstrap][Bootstrap.com]][Bootstrap-url]
