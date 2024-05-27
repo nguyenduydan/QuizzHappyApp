@@ -13,8 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import ntu.edu.quizzhappyapp.Activities.ResultActivity;
@@ -29,6 +34,7 @@ public class ListFragment extends Fragment {
     ArrayList<TypeQues> list;
     RecyclerView recyclerView;
     TextView tvUsername;
+    ImageView imgUser;
     QuizDBHelper db;
 
     @Override
@@ -44,6 +50,7 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         recyclerView = view.findViewById(R.id.ryclerView);
         tvUsername = view.findViewById(R.id.tv_username);
+        imgUser = view.findViewById(R.id.user_img);
         //Hiển thị username ở ListFragment
         // Lấy dữ liệu từ Intent của hoạt động chứa Fragment
         Bundle bundle = getActivity().getIntent().getExtras();
@@ -51,8 +58,15 @@ public class ListFragment extends Fragment {
         if (bundle != null) {
             userID = bundle.getInt("userID");
             String userName = db.getUsername(userID);
+            String userAvatar = db.getImg(userID);
             if(userName != null) {
                 tvUsername.setText(userName);
+                if (userAvatar != null && !userAvatar.isEmpty()) {
+                    File imgFile = new File(getContext().getFilesDir(), userAvatar);
+                    if (imgFile.exists()) {
+                        Glide.with(this).load(imgFile).into(imgUser);
+                    }
+                }
             } else {
                 Toast.makeText(getContext(),"Không tìm thấy thông tin người dùng!",Toast.LENGTH_SHORT).show();
             }
