@@ -16,7 +16,7 @@
 ##
 
 <div align="center">
-    <h1><b>GIỚI THIỆU TỔNG QUAN</h1><br>
+    <h1><b>GIỚI THIỆU TỔNG QUAN VỀ APP QUIZZHAPPY</h1><br>
     <img  src="Img/all.gif" alt="gif" width="auto" height="500">
 </div>
 
