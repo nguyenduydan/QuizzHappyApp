@@ -15,13 +15,22 @@
 
 ##
 
-<div>
+<div align="center">
     <h1><b>GIỚI THIỆU TỔNG QUAN</h1><br>
-    <div align="center">
-        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnY3c3Y2Nmt0cHMyMWcyem4yYmZjOGV1ejk3aDk5M2tkN2twNmxwNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CwNp7OJlqKHWTAiXdx/giphy.gif" alt="gif" width="auto" height="400">
-    </div>
+    <img  src="Img/all.gif" alt="gif" width="auto" height="500">
 </div>
 
+</br>
+<div align="center">
+        <h1><b>Màn hình đăng nhập và đăng ký</h1>
+        <img src="Img/login.gif" alt="gif" width="auto" height="500">
+        <img src="Img/signup.gif" alt="gif" width="auto" height="500">
+</div>
+</br>
+<div align="center">
+        <h1><b>Chức năng upload ảnh từ thư viện điện thoại</h1>
+        <img src="Img/editimg.gif" alt="gif" width="auto" height="500">
+</div>
 </br>
 
 ![Static Badge](https://img.shields.io/badge/ASUS-blue?style=for-the-badge&logo=asus) ![Static Badge](https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github) ![Static Badge](https://img.shields.io/badge/Java-green?style=for-the-badge)![Static Badge](https://img.shields.io/badge/C%23-purple?style=for-the-badge&logo=C%23) ![Static Badge](https://img.shields.io/badge/HTML-orange?style=for-the-badge&logo=HTML5) ![Static Badge](https://img.shields.io/badge/CSS-magenta?style=for-the-badge&logo=Css3)
