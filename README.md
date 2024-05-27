@@ -17,7 +17,9 @@
 
 <div>
     <h1><b>GIỚI THIỆU TỔNG QUAN</h1><br>
-    <img src="login.gif" alt="gif" width="auto" height="300">
+    <div align="center">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnY3c3Y2Nmt0cHMyMWcyem4yYmZjOGV1ejk3aDk5M2tkN2twNmxwNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CwNp7OJlqKHWTAiXdx/giphy.gif" alt="gif" width="auto" height="400">
+    </div>
 </div>
 
 </br>
