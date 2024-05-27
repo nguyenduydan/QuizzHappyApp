@@ -23,8 +23,11 @@
 </br>
 <div align="center">
         <h1><b>Màn hình đăng nhập và đăng ký</h1>
-        <img src="Img/login.gif" alt="gif" width="auto" height="500">
-        <img src="Img/signup.gif" alt="gif" width="auto" height="500">
+        | Màn hình đăng ký | Màn hình đăng nhập |
+        | :--------------- | :----------------- |
+        | <img src="Img/signup.gif" alt="gif" width="auto" height="500">| <img src="Img/login.gif" alt="gif" width="auto" height="500">|
+        
+        
 </div>
 </br>
 <div align="center">
