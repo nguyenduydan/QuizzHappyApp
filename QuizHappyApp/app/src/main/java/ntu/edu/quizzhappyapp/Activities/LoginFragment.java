@@ -33,7 +33,7 @@ public class LoginFragment extends Fragment {
 
     Button btn_signup,btn_login, btnOk,btnTry;
     ImageButton btn_showPwd;
-    TextView errorTxt, infoTxt;
+    TextView errorTxt, infoTxt,error;
     EditText username, password;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +76,8 @@ public class LoginFragment extends Fragment {
                 String pass = password.getText().toString();
 
                 if(TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) ){ //kiểm tra có để trống hay không
-                    Toast.makeText(getContext(),"Không được để trống!",Toast.LENGTH_SHORT).show();
+                    openDialogError(Gravity.CENTER);
+                    errorTxt.setText("Không được để trống");
                 }else {
                     Boolean checkUserPass = dbHelper.checkUsernamePassword(user,pass);
                     if(checkUserPass==true){
@@ -212,4 +213,6 @@ public class LoginFragment extends Fragment {
         });
         dialog.show();
     }
+
+
 }
