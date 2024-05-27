@@ -391,11 +391,11 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         return null;
     }
 
-    public ArrayList<Questions> loadQuestion(){
+    public ArrayList<Questions> loadQuestion(int typeID){
         ArrayList<Questions> ds = new ArrayList<>();
         SQLiteDatabase dbReadable = this.getReadableDatabase();
-        String sqlSelect = "SELECT * FROM QUESTION;";
-        Cursor cs = dbReadable.rawQuery(sqlSelect, null);
+        String sqlSelect = "SELECT * FROM QUESTION WHERE typeID=? ;";
+        Cursor cs = dbReadable.rawQuery(sqlSelect,  new String[]{String.valueOf(typeID)});
 
         if (cs.moveToFirst()) {
             do {
