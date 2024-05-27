@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
+import ntu.edu.quizzhappyapp.Models.Result;
 import ntu.edu.quizzhappyapp.R;
 
 public class ResultActivity extends AppCompatActivity {
@@ -26,6 +28,8 @@ public class ResultActivity extends AppCompatActivity {
     TextView quesCorrect, quesWrong, time, point, percent;
     ImageView img;
     QuizDBHelper db;
+    Result resultData;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,11 @@ public class ResultActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.appCompatButton);
         img = findViewById(R.id.gifImg);
         quesCorrect = findViewById(R.id.tvCorrectCount);
+        quesWrong = findViewById(R.id.tvWrongCount);
+        point = findViewById(R.id.tvPoint);
+        time = findViewById(R.id.tvTime);
+        percent = findViewById(R.id.tvPercent);
+        progressBar = findViewById(R.id.circularProgressBar);
 
         Glide.with(this)
                 .asGif()
@@ -59,9 +68,27 @@ public class ResultActivity extends AppCompatActivity {
                 startActivity(home);
             }
         });
+        show();
     }
 
-    private void show(){
-
+    public void show(){
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            int typeId = bundle.getInt("typeID");
+            int anwTrue = bundle.getInt("anwTrue");
+            int anwFalse = bundle.getInt("anwFalse");
+            int totalques = bundle.getInt("totalQues");
+            resultData = db.getResult(typeId);
+            if (resultData != null){
+                quesCorrect.setText(String.valueOf(anwTrue));
+                quesWrong.setText(String.valueOf(anwFalse));
+                point.setText(String.valueOf(resultData.getScore()));
+                time.setText(resultData.getTimeStamp());
+                double percentage = (double) anwTrue / totalques * 100;
+                percent.setText(String.format("%.0f%%", percentage));
+            }else {
+                Toast.makeText(this, "Lỗi",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

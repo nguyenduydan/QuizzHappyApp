@@ -10,8 +10,10 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import ntu.edu.quizzhappyapp.Models.Questions;
+import ntu.edu.quizzhappyapp.Models.Result;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
 
 public class QuizDBHelper extends SQLiteOpenHelper  {
@@ -473,9 +475,20 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         }
     }
 
-//    public boolean getResult(int typeID){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = new
-//    }
-
+    public Result getResult(int typeID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM RESULTS WHERE typeQuesID = ?", new String[]{String.valueOf(typeID)});
+        Result result = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            int score = cursor.getInt(1);
+            String time = cursor.getString(2);
+            result = new Result(id, score, time, typeID);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+        return result;
+    }
 }

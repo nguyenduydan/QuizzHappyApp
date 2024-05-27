@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -45,7 +46,7 @@ public class QuestionActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     static final long TIME_LIMIT = 30000;
     Handler handler;
-    int pointsPerQuestion = 10, totalPoint=0;
+    int pointsPerQuestion = 10, totalPoint=0, countQuesTrue=0,countQuesFalse=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,11 +163,13 @@ public class QuestionActivity extends AppCompatActivity {
                 Log.e("CurrentQuestion", currentQuestion.toString());
 
                 if(checkAnswer(currentQuestion, typeBtn)){
+                    countQuesTrue++;
                     typeBtn.setBackground(drawable_T);
                     typeBtn.setTextColor(Color.GREEN);
                     totalPoint += pointsPerQuestion;
                 }
                 else {
+                    countQuesFalse++;
                     typeBtn.setBackground(drawable_F);
                     typeBtn.setTextColor(Color.RED);
                 }
@@ -182,10 +185,6 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean checkAnswer(Questions question, RadioButton selectedRadioButton) {
         int selectedOptionId =getPos(selectedRadioButton);
         int correctOptionId = question.getOptionCorrect();
-
-        Log.e("selectedOptionId", String.valueOf(selectedOptionId));
-        Log.e("correctOptionId", String.valueOf(correctOptionId));
-
         if(selectedOptionId == correctOptionId)
             return true;
         return false;
@@ -227,7 +226,10 @@ public class QuestionActivity extends AppCompatActivity {
         if (quesCurrent >= list.size()) {
             int id = getTypeID(); // ID của loại câu hỏi (typeID)
             Date currentTime = new Date();
-            String time = currentTime.toString();
+
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String time = dateTimeFormat.format(currentTime);
+
             boolean isResultExis = db.isResultExist(id);
             if (isResultExis) {
                 db.updateResult(totalPoint, time, id);
@@ -282,6 +284,10 @@ public class QuestionActivity extends AppCompatActivity {
                 if (bundle != null) {
                     int userID = bundle.getInt("userID");
                     bundle.putInt("userID",userID);
+                    bundle.putInt("typyID",getTypeID());
+                    bundle.putInt("anwTrue",countQuesTrue);
+                    bundle.putInt("anwFalse",countQuesFalse);
+                    bundle.putInt("totalQues",totalQues);
                     resultActivity.putExtras(bundle);
                 }
                 startActivity(resultActivity);
