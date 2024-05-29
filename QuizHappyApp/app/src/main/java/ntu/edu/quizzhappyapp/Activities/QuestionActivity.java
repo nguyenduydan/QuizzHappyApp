@@ -158,7 +158,6 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Questions currentQuestion = list.get(quesCurrent);
-                Log.e("CurrentQuestion", currentQuestion.toString());
 
                 if(checkAnswer(currentQuestion, typeBtn)){
                     countQuesTrue++;
@@ -260,11 +259,6 @@ public class QuestionActivity extends AppCompatActivity {
         windowAttributes.gravity = gravity;
         window.setAttributes(windowAttributes);
 
-        if(Gravity.CENTER == gravity){ //Click ra ngoài sẽ tắt
-            dialog.setCancelable(true);
-        }else {
-            dialog.setCancelable(false);
-        }
         btnOk =dialog.findViewById(R.id.btn_submit);
         tvInfo = dialog.findViewById(R.id.tv_Info);
         ImageView img = dialog.findViewById(R.id.gifImg);
