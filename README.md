@@ -10,6 +10,7 @@
     </a>
      <h3 align="center">🐧NGUYỄN THIẾT DUY ĐAN🐧</h3>
      <h3 align="center" style="margin:0">63133615</h3>
+     <h3 align="center">File docs: <a href="https://docs.google.com/document/d/1WnwFvec8QCMKa47bYa5Fh_ka1hNLb6u9iOqhCvfILxw/edit#heading=h.9kdu2wgdt234">Báo cáo chi tiết Quiz Happy</a></h3>
 
 </div>
 
