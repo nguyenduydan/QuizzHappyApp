@@ -1,5 +1,6 @@
 package ntu.edu.quizzhappyapp.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,9 +10,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,18 +18,11 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.Models.Questions;
 import ntu.edu.quizzhappyapp.R;
@@ -97,7 +89,8 @@ public class QuestionActivity extends AppCompatActivity {
         list = db.loadQuestion(ID);
 
         totalQues = list.size();
-        tvCountQues.setText((quesCurrent + 1) + "/" + totalQues);
+        String showQues = "(quesCurrent + 1) + \"/\" + totalQues";
+        tvCountQues.setText(showQues);
 
         // Hiển thị câu hỏi đầu tiên nếu có
         if (!list.isEmpty()) {
@@ -122,12 +115,7 @@ public class QuestionActivity extends AppCompatActivity {
         onClick(rb3);
         onClick(rb4);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void startTimer() {
@@ -135,7 +123,8 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 long secondsRemaining = millisUntilFinished / 1000;
-                tvTimeCount.setText(String.format("00:%02d", secondsRemaining));
+                String showTime = "String.format(\"00:%02d\", secondsRemaining)";
+                tvTimeCount.setText(showTime);
                 if (secondsRemaining <= 10) {
                     tvTimeCount.setTextColor(Color.RED);
                 } else {
@@ -152,39 +141,29 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void onClick(RadioButton typeBtn){
-        Drawable drawable_T = getResources().getDrawable(R.drawable.btn_bg_answer_true);
-        Drawable drawable_F = getResources().getDrawable(R.drawable.btn_bg_answer_false);
-        typeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Questions currentQuestion = list.get(quesCurrent);
+        @SuppressLint("UseCompatLoadingForDrawables") Drawable drawable_T = getResources().getDrawable(R.drawable.btn_bg_answer_true);
+        @SuppressLint("UseCompatLoadingForDrawables") Drawable drawable_F = getResources().getDrawable(R.drawable.btn_bg_answer_false);
+        typeBtn.setOnClickListener(v -> {
+            Questions currentQuestion = list.get(quesCurrent);
 
-                if(checkAnswer(currentQuestion, typeBtn)){
-                    countQuesTrue++;
-                    typeBtn.setBackground(drawable_T);
-                    typeBtn.setTextColor(Color.GREEN);
-                    totalPoint += pointsPerQuestion;
-                }
-                else {
-                    countQuesFalse++;
-                    typeBtn.setBackground(drawable_F);
-                    typeBtn.setTextColor(Color.RED);
-                }
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        nextQuestion();
-                    }
-                }, 200);
+            if(checkAnswer(currentQuestion, typeBtn)){
+                countQuesTrue++;
+                typeBtn.setBackground(drawable_T);
+                typeBtn.setTextColor(Color.GREEN);
+                totalPoint += pointsPerQuestion;
             }
+            else {
+                countQuesFalse++;
+                typeBtn.setBackground(drawable_F);
+                typeBtn.setTextColor(Color.RED);
+            }
+            handler.postDelayed(this::nextQuestion, 200);
         });
     }
     private boolean checkAnswer(Questions question, RadioButton selectedRadioButton) {
         int selectedOptionId =getPos(selectedRadioButton);
         int correctOptionId = question.getOptionCorrect();
-        if(selectedOptionId == correctOptionId)
-            return true;
-        return false;
+        return selectedOptionId == correctOptionId;
     }
 
     private int getPos(RadioButton selectBtn){
@@ -202,11 +181,12 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void nextQuestion() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        Drawable drawable = getResources().getDrawable(R.drawable.btn_bg_question);
+        @SuppressLint("UseCompatLoadingForDrawables") Drawable drawable = getResources().getDrawable(R.drawable.btn_bg_question);
         //Thiết lập lại màu cũ
         rb1.setBackground(drawable);
         rb2.setBackground(drawable);
@@ -224,7 +204,7 @@ public class QuestionActivity extends AppCompatActivity {
             int id = getTypeID(); // ID của loại câu hỏi (typeID)
             Date currentTime = new Date();
 
-            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String time = dateTimeFormat.format(currentTime);
 
             boolean isResultExis = db.isResultExist(id);
@@ -269,22 +249,18 @@ public class QuestionActivity extends AppCompatActivity {
                 .into(img);
         Intent resultActivity = new Intent(QuestionActivity.this,ResultActivity.class);
         Bundle bundle = getIntent().getExtras();
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (bundle != null) {
-                    int userID = bundle.getInt("userID");
-                    bundle.putInt("userID",userID);
-                    bundle.putInt("typyID",getTypeID());
-                    bundle.putInt("anwTrue",countQuesTrue);
-                    bundle.putInt("anwFalse",countQuesFalse);
-                    bundle.putInt("totalQues",totalQues);
-                    resultActivity.putExtras(bundle);
-                }
-                startActivity(resultActivity);
-                dialog.dismiss();
+        btnOk.setOnClickListener(v -> {
+            if (bundle != null) {
+                int userID = bundle.getInt("userID");
+                bundle.putInt("userID",userID);
+                bundle.putInt("typyID",getTypeID());
+                bundle.putInt("anwTrue",countQuesTrue);
+                bundle.putInt("anwFalse",countQuesFalse);
+                bundle.putInt("totalQues",totalQues);
+                resultActivity.putExtras(bundle);
             }
+            startActivity(resultActivity);
+            dialog.dismiss();
         });
         dialog.show();
     }
