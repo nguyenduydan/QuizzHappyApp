@@ -8,10 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
-import java.util.Date;
-
 import ntu.edu.quizzhappyapp.Models.Questions;
 import ntu.edu.quizzhappyapp.Models.Result;
 import ntu.edu.quizzhappyapp.Models.TypeQues;
@@ -120,11 +117,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         values.put(COLUMN_EMAIL,email);
 
         long result = db.insert(TABLE_USERS,null,values);
-        if(result == -1){
-            return false;
-        }else {
-            return true;
-        }
+        return result != -1;
     }
 
     public boolean checkUsername(String username){
@@ -158,7 +151,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     public int getID(String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM USERS WHERE username=? AND password=?", new String[]{username, password});
-        int userID = 0;
+        int userID;
 
         if (cursor != null && cursor.moveToFirst()) {
 
@@ -175,7 +168,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
 
     public String getUsername(int ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String username = null;
+        String username;
 
         try {
             // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
@@ -202,7 +195,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
 
     public String getEmail(int ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String email = null;
+        String email;
 
         try {
             // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
@@ -228,7 +221,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     }
     public String getPassword(int ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String password = null;
+        String password;
 
         try {
             // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
@@ -278,13 +271,8 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
             }
         }
 
-        if(result == -1){
-            db.close();
-            return false;
-        }else {
-            db.close();
-            return true;
-        }
+        db.close();
+        return result != -1;
     }
 
     public boolean updateImagerUser(int ID, String img){
@@ -294,18 +282,13 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
         values.put(COLUMN_AVATAR,img);
         long result = db.update(TABLE_USERS,values,"userID = ?", new String[]{String.valueOf(ID)});
 
-        if(result == -1){
-            db.close();
-            return false;
-        }else {
-            db.close();
-            return true;
-        }
+        db.close();
+        return result != -1;
     }
 
     public String getImg(int ID){
         SQLiteDatabase db = this.getReadableDatabase();
-        String avatar = null;
+        String avatar;
 
         try {
             // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
@@ -351,7 +334,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
     public int getTypeID(int pos){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " +  TABLE_TYPEQUES + " WHERE typeID = ?", new String[]{String.valueOf(pos)});
-        int typeID = 0;
+        int typeID;
 
         if (cursor != null && cursor.moveToFirst()) {
 
@@ -367,7 +350,7 @@ public class QuizDBHelper extends SQLiteOpenHelper  {
 
     public String getTypeName(int ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String name = null;
+        String name;
 
         try {
             // Sử dụng câu truy vấn SQL để lấy thông tin của người dùng dựa trên ID
