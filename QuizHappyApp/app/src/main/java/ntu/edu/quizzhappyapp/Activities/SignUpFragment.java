@@ -19,11 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
-
 import ntu.edu.quizzhappyapp.Helper.QuizDBHelper;
 import ntu.edu.quizzhappyapp.R;
 
@@ -196,7 +193,7 @@ public class SignUpFragment extends Fragment {
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
         windowAttributes.gravity = gravity;
         window.setAttributes(windowAttributes);
-        
+
         btnTry =dialog.findViewById(R.id.btn_try);
         error = dialog.findViewById(R.id.tv_error);
         ImageView img = dialog.findViewById(R.id.gifImgEr);
