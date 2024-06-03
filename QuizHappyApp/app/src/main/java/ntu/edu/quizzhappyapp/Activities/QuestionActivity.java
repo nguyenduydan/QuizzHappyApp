@@ -131,7 +131,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(TIME_LIMIT, 1000) {
+        countDownTimer = new CountDownTimer(TIME_LIMIT, 1000) { //countDownInterval = 1000 là mỗi giây bộ đếm ngược sẽ cập nhật một lần
             @Override
             public void onTick(long millisUntilFinished) {
                 long secondsRemaining = millisUntilFinished / 1000;
